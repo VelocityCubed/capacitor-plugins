@@ -1,5 +1,7 @@
 package com.capacitorjs.plugins.browser;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import com.getcapacitor.Logger;
 import com.getcapacitor.Plugin;
@@ -10,7 +12,6 @@ import com.getcapacitor.util.WebColor;
 
 @CapacitorPlugin(name = "Browser")
 public class BrowserPlugin extends Plugin {
-
     private Browser implementation;
 
     public void load() {
@@ -54,7 +55,11 @@ public class BrowserPlugin extends Plugin {
 
     @PluginMethod
     public void close(PluginCall call) {
-        call.unimplemented();
+        Context context = getActivity().getBaseContext();
+        Intent myIntent = new Intent(context, getActivity().getClass());
+        myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(myIntent);
     }
 
     @Override
